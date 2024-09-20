@@ -1,0 +1,69 @@
+<html lang="en">
+<head>
+    <meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Dragging Papers</title>
+    <link rel="stylesheet" href='style.css'>
+</head>
+<body>
+
+    <div class="paper heart"></div>
+
+    <div class="paper images">
+        <p>and I'm very lucky</p>
+        <p>to have a friend like you</p>
+        <img src="img3.jpg" alt="Image 1">
+    </div> 
+
+    <div class="paper images">
+        <img src="img2.jpg" alt="Image 2">
+    </div>
+    <div class="paper images">
+        <p>You are so.... </p>
+        <p>Cute &#128159;</p>
+        <img src="img1.jpg" alt="Image 3">
+    </div>
+
+    <div class="paper"></div>
+    <div class="paper">
+        <p>Happy birthday to the most beautiful</p>
+        <p>GIRL I’ve ever seen  &#127874;</p>
+    </div>
+    <div class="paper">
+        <p>Slide the paper 	&#128525;</p>
+    </div>
+
+    <script>
+        document.querySelectorAll('.paper').forEach(paper => {
+            paper.addEventListener('mousedown', startDrag);
+            paper.addEventListener('touchstart', startDrag);
+
+            function startDrag(e) {
+                e.preventDefault();
+
+                const startX = (e.type === 'touchstart' ? e.touches[0].pageX : e.pageX) - paper.offsetLeft;
+                const startY = (e.type === 'touchstart' ? e.touches[0].pageY : e.pageY) - paper.offsetTop;
+
+                document.addEventListener('mousemove', movePaper);
+                document.addEventListener('touchmove', movePaper);
+                document.addEventListener('mouseup', stopDrag);
+                document.addEventListener('touchend', stopDrag);
+
+                function movePaper(e) {
+                    paper.style.left = (e.type === 'touchmove' ? e.touches[0].pageX : e.pageX) - startX + 'px';
+                    paper.style.top = (e.type === 'touchmove' ? e.touches[0].pageY : e.pageY) - startY + 'px';
+                }
+
+                function stopDrag() {
+                    document.removeEventListener('mousemove', movePaper);
+                    document.removeEventListener('touchmove', movePaper);
+                    document.removeEventListener('mouseup', stopDrag);
+                    document.removeEventListener('touchend', stopDrag);
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>
